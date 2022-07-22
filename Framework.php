@@ -9,7 +9,7 @@ class Framework
     private float $xport;
     private float $mport;
 
-    public function __construct(float $mtE1, float $mtE2, float $txProfit, float $mtAmortit = 0,float $mtxport,float $mtmport)
+    public function __construct(float $mtE1, float $mtE2, float $txProfit,float $mtxport,float $mtmport, float $mtAmortit = 0)
     {
 
         if (($txProfit >= 0 && $txProfit <= 100) && ($mtE1 >= $mtE2)) {
