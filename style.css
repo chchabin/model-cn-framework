@@ -1,0 +1,16 @@
+.tableaux{
+    display:inline-block;
+    vertical-align:top;
+    padding-right: 20px;
+}
+td{
+    padding-right: 10px;
+}
+.value{
+    color: red;
+    font-weight: bold;
+    text-align: end;
+}
+.key{
+    text-transform: capitalize;
+}
