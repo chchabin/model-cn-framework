@@ -37,7 +37,8 @@ class Dispatcher {
     /**
      * routage de l'URL
      */
-    function loadRequete(){
+    function loadRequete(): void
+    {
         $this->_urlValues = $_REQUEST;
         if (!isset($this->_urlValues['uc'])) {
             $this->_uc = 'voir';
@@ -55,14 +56,17 @@ class Dispatcher {
      * Appel du controleur
      * @return mixed
      */
-    function loadControleur() {
+    function loadControleur(): mixed
+    {
         $this->_ucname='Controller'.$this->_uc;
-        require "Class.$this->_ucname.php";
+        $name="Class.$this->_ucname.php";
+        require $name;
         $ctrl=$this->_ucname;
         return new $ctrl();
     }
 
-    function error($message) {
+    function error($message): void
+    {
         $controller = new Controller();
         $controller->e404($message);
     }
