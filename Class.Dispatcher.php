@@ -41,7 +41,7 @@ class Dispatcher {
     {
         $this->_urlValues = $_REQUEST;
         if (!isset($this->_urlValues['uc'])) {
-            $this->_uc = 'voir';
+            $this->_uc = 'Voir';
         } else {
             $this->_uc = $this->_urlValues['uc'];
         }
