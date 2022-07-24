@@ -41,7 +41,7 @@ class Dispatcher {
     {
         $this->_urlValues = $_REQUEST;
         if (!isset($this->_urlValues['uc'])) {
-            $this->_uc = 'Voir';
+            $this->_uc = 'voir';
         } else {
             $this->_uc = $this->_urlValues['uc'];
         }
@@ -58,7 +58,8 @@ class Dispatcher {
      */
     function loadControleur(): mixed
     {
-        $this->_ucname='Controller'.$this->_uc;
+        $nameCtrl=ucfirst($this->_uc);
+        $this->_ucname='Controller'.$nameCtrl;
         $name="Class.$this->_ucname.php";
         require $name;
         $ctrl=$this->_ucname;

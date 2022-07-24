@@ -6,11 +6,6 @@ use Metier\Operation;
 
 class ControllerVoir extends Controller
 {
-    /**
-     * @var ModelArray
-     * @var ListAgents
-     */
-    private ModelArray $_menu;
     private ?ListAgents $_agentsList;
     private ComptaNat $_staticList;
     private Operation $_operation;
@@ -57,8 +52,8 @@ class ControllerVoir extends Controller
     public function getRelations()
     {
         $this->loadModel('Array');
-        $this->_menu = $this->_model;
-        return $this->_menu->getTab('relations');
+        $_menu = $this->_model;
+        return $_menu->getTab('relations');
     }
 
     public function validerOperation(string $operation, \Metier\Entreprise $acheteur, \Metier\Entreprise $vendeur, float $montant)
