@@ -99,7 +99,108 @@ class ComptaNat
     ];
     private array $bilan_TEE;
     private array $bilan_TOF;
-
+    public function setActifTeeBlank():void{
+        $this->actif_TEE = [
+            'E' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ],
+            'M' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ],
+            'Ext' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ]
+        ];
+    }
+    public function setPassifTeeBlank():void{
+        $this->passif_TEE = [
+            'e' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ],
+            'm' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ],
+            'ext' => [
+                'prd' => 0,
+                'ci' => 0,
+                'va' => 0,
+                'sal' => 0,
+                'rns' => 0,
+                'rdb' => 0,
+                'c' => 0,
+                'e' => 0,
+                'st' => 0,
+                'fbcf' => 0,
+                'solde' => 0
+            ]
+        ];
+    }
+    public function setActifTofBlank():void{
+        $this->actif_TOF = [
+            'BC' => 0,
+            'E' => 0,
+            'M' => 0,
+            'Ext' => 0
+        ];
+    }
+    public function setPassifTofBlank():void{
+        $this->passif_TOF = [
+            'bc' => 0,
+            'e' => 0,
+            'm' => 0,
+            'ext' => 0
+        ];
+    }
     public function getNom(): string
     {
         return $this->_achtr;
@@ -110,7 +211,7 @@ class ComptaNat
         return $this->actif_TEE;
     }
 
-    public function getBilan_TEE()
+    public function getBilan_TEE():array
     {
         $i = 0;
         foreach ($this->actif_TEE as $k => $v) {
@@ -148,7 +249,7 @@ class ComptaNat
         return $this->bilan_TEE;
     }
 
-    public function getBilan_TOF()
+    public function getBilan_TOF():array
     {
         $i = 0;
         foreach ($this->actif_TOF as $k => $v) {
@@ -164,92 +265,92 @@ class ComptaNat
         return $this->bilan_TOF;
     }
 
-    public function TeeProduction(float $mt)
+    public function TeeProduction(float $mt):void
     {
         $this->passif_TEE[strtolower('E')]['prd'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeStock(float $mt)
+    public function TeeStock(float $mt):void
     {
         $this->actif_TEE['E']['st'] += $mt;
         if($this->actif_TEE['E']['st']<0){$this->actif_TEE['E']['st']=0;}
         $this->getBilan_TEE();
     }
 
-    public function TeeExport(float $mt)
+    public function TeeExport(float $mt):void
     {
         $this->actif_TEE['Ext']['prd'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeImport(float $mt)
+    public function TeeImport(float $mt):void
     {
         $this->passif_TEE[strtolower('Ext')]['prd'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeCInterm(float $mt)
+    public function TeeCInterm(float $mt):void
     {
         $this->actif_TEE['E']['ci'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRsal(float $mt)
+    public function TeeRsal(float $mt):void
     {
         $this->actif_TEE['E']['sal'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRsalEM(float $mt)
+    public function TeeRsalEM(float $mt):void
     {
         $this->passif_TEE[strtolower('M')]['sal'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRnsalEE(float $mt)
+    public function TeeRnsalEE(float $mt):void
     {
         $this->actif_TEE['E']['rns'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRnsalER(float $mt)
+    public function TeeRnsalER(float $mt):void
     {
         $this->passif_TEE[strtolower('E')]['rns'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRnsalME(float $mt)
+    public function TeeRnsalME(float $mt):void
     {
         $this->actif_TEE['M']['rns'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeRnsalMR(float $mt)
+    public function TeeRnsalMR(float $mt):void
     {
         $this->passif_TEE[strtolower('M')]['rns'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeCfinale(float $mt)
+    public function TeeCfinale(float $mt):void
     {
         $this->actif_TEE['M']['c'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function TeeFbcf(float $mt)
+    public function TeeFbcf(float $mt):void
     {
         $this->actif_TEE['E']['fbcf'] += $mt;
         $this->getBilan_TEE();
     }
 
-    public function actif_TOF(string $agt, float $mt, int $sign)
+    public function actif_TOF(string $agt, float $mt, int $sign):void
     {
         $this->actif_TOF[$agt] += $sign * $mt;
         $this->getBilan_TOF();
     }
 
-    public function passif_TOF(string $agt, float $mt, int $sign)
+    public function passif_TOF(string $agt, float $mt, int $sign):void
     {
         $this->passif_TOF[strtolower($agt)] += $sign * $mt;
         $this->getBilan_TOF();

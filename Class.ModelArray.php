@@ -10,10 +10,10 @@ class ModelArray {
 
     /**
      * choix de l'objet utilis" par getmenu
-     * @param $tab
-     * @return boolean
+     * @param string $tab
+     * @return object
      */
-    function getTab($tab) {
+    function getTab(string $tab):object {
         require 'd_liensAffichage.php';
 
         return ${$tab};

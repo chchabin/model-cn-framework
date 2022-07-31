@@ -19,7 +19,28 @@ class Banque
         'Rdm' => 0
     ];
     private array $bilan;
-
+    public function setActifBlank():void{
+        $this->actif=[
+            'BC' => 0,
+            'M' => 0,
+            'Bfi' => 0,
+            'Rdm' => 0
+        ];
+        if(isset($this->bilan)&&count($this->bilan)>4){
+            $lg=count($this->bilan);
+            for($i=4;$i<$lg;$i++){
+                unset($this->bilan[$i]);
+            }
+        }
+    }
+    public function setPassifBlank():void{
+        $this->passif = [
+            'BC' => 0,
+            'M' => 0,
+            'Bfi' => 0,
+            'Rdm' => 0
+        ];
+    }
     public function __construct(string $achtr)
     {
         $this->_achtr = $achtr;
@@ -37,7 +58,7 @@ class Banque
         return $this->_colonneT;
     }
 
-    public function getBilan()
+    public function getBilan():array
     {
         $i = 0;
         foreach ($this->actif as $k => $v) {
@@ -66,7 +87,7 @@ class Banque
         $this->getBilan();
     }
 
-    public function BanqueFin_Passif(string $ent, float $montant)
+    public function BanqueFin_Passif(string $ent, float $montant):void
     {
         if (!isset($this->passif[$ent])) {
             $this->passif[$ent] = 0;

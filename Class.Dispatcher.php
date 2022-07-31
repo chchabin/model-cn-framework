@@ -7,13 +7,11 @@
  */
 class Dispatcher {
 
-    private $_uc;//controleur
-    private $_ucname;//nom du controleur
-    private $_action;//méthode du controleur
-    private $_params = array();//paramètres associés à l'action
-    private $_urlValues;
+    private string $_uc;//controleur
+    private string $_action;//méthode du controleur
+    private array $_params = array();//paramètres associés à l'action
 
-/**
+    /**
  * Gestion des url
  * /index.php?uc=voirGraphique&action=creerGraphique&params=xxx
  * sans index force 
@@ -21,53 +19,49 @@ class Dispatcher {
  */
     function __construct() {
         //Gestion de l'url
-        $this->loadRequete();
+        $this->loadRequest();
 
-        $controleur = $this->loadControleur();
-        
-        //test si la méthode existe dans le controleur
-        if (!in_array($this->_action, get_class_methods($controleur))) {
-            $this->error('Le controller ' . $this->_uc . ' n\'a pas de méthode ' . $this->_action);
+        $controller = $this->loadController();
+
+        //test si la méthode existe dans le contrôleur
+        if (!in_array($this->_action, get_class_methods($controller))) {
+            $this->error("Le controller $this->_uc n'a pas de méthode " . $this->_action);
         }
-        //appel de la méthode du controleur
-        call_user_func_array(array($controleur, $this->_action), array( $this->_params));
+        //appel de la méthode du contrôleur
+        call_user_func_array(array($controller, $this->_action), array( $this->_params));
 
     }
 
     /**
      * routage de l'URL
      */
-    function loadRequete(): void
-    {
-        $this->_urlValues = $_REQUEST;
-        if (!isset($this->_urlValues['uc'])) {
+    function loadRequest():void{
+        $_urlValues = $_REQUEST;
+        if (!isset($_urlValues['uc'])) {
             $this->_uc = 'voir';
         } else {
-            $this->_uc = $this->_urlValues['uc'];
+            $this->_uc = $_urlValues['uc'];
         }
-        if (!isset($this->_urlValues['action'])) {
+        if (!isset($_urlValues['action'])) {
             $this->_action = 'accueil';
         } else {
-            $this->_action = $this->_urlValues['action'];
+            $this->_action = $_urlValues['action'];
         }
 
     }
+
     /**
-     * Appel du controleur
-     * @return mixed
+     * @return object
      */
-    function loadControleur(): mixed
-    {
+    function loadController():object {
         $nameCtrl=ucfirst($this->_uc);
-        $this->_ucname='Controller'.$nameCtrl;
-        $name="Class.$this->_ucname.php";
+        $_ucname ='Controller'.$nameCtrl;
+        $name="Class.$_ucname.php";
         require $name;
-        $ctrl=$this->_ucname;
-        return new $ctrl();
+        return new $_ucname();
     }
 
-    function error($message): void
-    {
+    function error(string $message):void {
         $controller = new Controller();
         $controller->e404($message);
     }

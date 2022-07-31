@@ -43,17 +43,41 @@ class Entreprise
     {
         return $this->_bqLoc;
     }
-    public function getActif()
+    public function getActif():array
     {
         return $this->actif;
     }
+    public function setActifBlank():void{
+        $this->actif = [
+            'Immo' => 0,
+            'St' => 0,
 
-    public function getPassif()
+            'T' => 0,
+            'Rdm' => 0
+        ];
+        if(isset($this->bilan)&&count($this->bilan)>4){
+            $lg=count($this->bilan);
+            //if($this->getNom()==='M'){var_dump($this->bilan);var_dump(count($this->bilan));}
+            for($i=4;$i<$lg;$i++){
+                unset($this->bilan[$i]);
+            }
+        }
+    }
+    public function setPassifBlank():void{
+        $this->passif = [
+            'K' => 0,
+            'B' => 0,
+
+            'Sal' => 0,
+            'rdm' => 0
+        ];
+    }
+    public function getPassif():array
     {
         return $this->passif;
     }
 
-    public function getBilan()
+    public function getBilan():array
     {
         $i = 0;
         foreach ($this->actif as $k => $v) {
@@ -70,7 +94,7 @@ class Entreprise
     }
 
 
-    public function getColonneTOF()
+    public function getColonneTOF():string
     {
         return $this->_colonneTof;
     }
@@ -81,28 +105,28 @@ class Entreprise
         $v->getBilan();
     }
 
-    private function Immobilisation(float $mont, int $sign)
+    private function Immobilisation(float $mont, int $sign):void
     {
         $this->actif['Immo'] += $sign * $mont;
     }
 
-    private function K(float $mont, int $sign)
+    private function K(float $mont, int $sign):void
     {
         $this->passif['K'] += $sign * $mont;
     }
 
-    private function Stock(float $mont, int $sign)
+    private function Stock(float $mont, int $sign):float
     {
         $this->actif['St'] += $sign * $mont;
         return $this->actif['St'];
     }
 
-    private function Banque(float $mont, int $sign)
+    private function Banque(float $mont, int $sign):void
     {
         $this->passif['B'] += $sign * $mont;
     }
 
-    private function Client(string $vd, float $mont, int $sign)
+    private function Client(string $vd, float $mont, int $sign):void
     {
         if (!isset($this->actif[$vd])) {
             $this->actif[$vd] = 0;
@@ -115,7 +139,7 @@ class Entreprise
         $this->actif[$vd] += $sign * $mont;
     }
 
-    private function Fournisseur(string $vd, float $mont, int $sign)
+    private function Fournisseur(string $vd, float $mont, int $sign):void
     {
         if (!isset($this->actif[$vd])) {
             $this->actif[$vd] = 0;
@@ -127,17 +151,17 @@ class Entreprise
         $this->passif[strtolower($vd)] += $sign * $mont;
     }
 
-    private function Tresorerie(float $mont, int $sign)
+    private function Tresorerie(float $mont, int $sign):void
     {
         $this->actif['T'] += $sign * $mont;
     }
 
-    private function Salaire(float $mont, int $sign)
+    private function Salaire(float $mont, int $sign):void
     {
         $this->passif['Sal'] += $sign * $mont;
     }
 
-    public function Production(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function Production(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         if ($this->_achtr != 'M') {
 
@@ -154,7 +178,7 @@ class Entreprise
 
     }
 
-    public function CI(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function CI(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         //Il faut nécessairement (en raison de la prog) que les agents soient des entreprises
        $stock= $this->Stock($mt, 1);
@@ -169,7 +193,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function SalairesPayes(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function SalairesPayes(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Tresorerie($mt, 1);
         $this->Client($vd->_achtr, $mt, -1);
@@ -180,7 +204,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function RevenusNonSal(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function RevenusNonSal(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         //Le vendeur est le payeur
         $this->Tresorerie($mt, 1);
@@ -189,7 +213,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function Consommation(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function Consommation(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Tresorerie($mt, -1);
         $this->Salaire($mt, -1);
@@ -201,7 +225,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function Capital(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function Capital(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Immobilisation($mt, 1);
         $this->Fournisseur($vd->_achtr, $mt, 1);
@@ -213,7 +237,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function Depreciation(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function Depreciation(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Immobilisation($mt, -1);
         $stock=$this->Stock($mt, 1);
@@ -221,7 +245,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function CIPaid(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function CIPaid(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         if ($this->_achtr != $vd->getNom()) {
             $this->Client($vd->getNom(), $mt, -1);
@@ -237,12 +261,12 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function Escompte(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function Escompte(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->majBilan($vd);
     }
 
-    public function TitresAchat(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function TitresAchat(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Immobilisation($mt, 1);
         $this->Tresorerie($mt, -1);
@@ -253,7 +277,7 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function TitresRemboursement(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function TitresRemboursement(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
 
         $this->Tresorerie($mt, -1);
@@ -271,20 +295,12 @@ class Entreprise
         $this->majBilan($vd);
     }
 
-    public function RemboursementBq(Entreprise $vd, float $mt, float $txPrf = 0)
+    public function RemboursementBq(Entreprise $vd, float $mt, float $txPrf = 0):void
     {
         $this->Banque($mt, -1);
         $this->Tresorerie($mt, -1);
 
         $this->majBilan($vd);
     }
-
-   /* public function FiReglement(Entreprise $vd, float $mt, float $txPrf = 0)
-    {
-        $this->K($mt, 1);
-        $this->Tresorerie($mt, 1);
-        $this->majBilan($vd);
-    }*/
-
 
 }

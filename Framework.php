@@ -8,21 +8,29 @@ class Framework
     private float $mtAmortit;
     private float $xport;
     private float $mport;
+    private float $mtSoldeExt;
 
-    public function __construct(float $mtE1, float $mtE2, float $txProfit,float $mtxport,float $mtmport, float $mtAmortit = 0)
+    public function __construct(float $mtE1, float $mtE2, float $txProfit, float $mtAmortit, float $mtxport, float $mtmport)
     {
 
         if (($txProfit >= 0 && $txProfit <= 100) && ($mtE1 >= $mtE2)) {
             $this->mtE1 = $mtE1;
             $this->mtE2 = $mtE2;
-            $this->txProfit = $txProfit / 100;
+            $this->txProfit = 1 - $txProfit / 100;
             $this->mtAmortit = $mtAmortit;
-            $this->xport=$mtxport;
-            $this->mport=$mtmport;
+            $this->xport = $mtxport;
+            $this->mport = $mtmport;
+            $this->mtSoldeExt = $this->xport - $this->mport;
+            // var_dump($this->mtE1,$this->mtE2,$this->txProfit, $this->mtAmortit, $this->xport,$this->mport,$this->soldeExt);
         }
     }
 
-    public function getListProfit()
+    public function getMtSoldeExt(): float
+    {
+        return $this->mtSoldeExt;
+    }
+
+    public function getListProfit(): array
     {
         return array(
             array(
@@ -34,13 +42,13 @@ class Framework
                 'operation' => 'Production',
                 'acheteur' => 'E2',
                 'vendeur' => 'M',
-                'montant' => $this->mtE2) ,
-           array(
+                'montant' => $this->mtE2),
+            array(
                 'operation' => 'ConsommationIntermediaire',
                 'acheteur' => 'E1',
                 'vendeur' => 'E2',
                 'montant' => $this->mtE2 * $this->txProfit),
-             array(
+            array(
                 'operation' => 'FiCI',
                 'acheteur' => 'E2',
                 'vendeur' => 'E1',
@@ -85,8 +93,6 @@ class Framework
                 'acheteur' => 'E1',
                 'vendeur' => 'M',
                 'montant' => $this->mtE1 * $this->txProfit),
-
-
             array(
                 'operation' => 'Consommation',
                 'acheteur' => 'M',
@@ -118,7 +124,7 @@ class Framework
                 'acheteur' => 'E2',
                 'vendeur' => 'M',
                 'montant' => $this->mtE2 * $this->txProfit),
-           array(
+            array(
                 'operation' => 'RevenusSal',
                 'acheteur' => 'M',
                 'vendeur' => 'E2',
@@ -180,7 +186,7 @@ class Framework
                 'vendeur' => 'M',
                 'montant' => $this->mtE2 * $this->txProfit),
             /*****************AMORTISSEMENT***********************/
-          array(
+            array(
                 'operation' => 'Production',
                 'acheteur' => 'E1',
                 'vendeur' => 'M',
@@ -324,7 +330,7 @@ class Framework
                 'operation' => 'RemboursementBq',
                 'acheteur' => 'E2',
                 'vendeur' => 'E2',
-                'montant' => $this->mtAmortit*2),
+                'montant' => $this->mtAmortit * 2),
             array(
                 'operation' => 'Credit',
                 'acheteur' => 'E2',
@@ -332,49 +338,48 @@ class Framework
                 'montant' => $this->mtAmortit * -1),
             //Relations internationales
             array(
-                'operation'=> 'ConsommationIntermediaire',
-                'acheteur'=> 'E1',
-                'vendeur'=> 'Rdm',
-                'montant'=> $this->mport * (1 - $this->txProfit)
+                'operation' => 'ConsommationIntermediaire',
+                'acheteur' => 'E1',
+                'vendeur' => 'Rdm',
+                'montant' => $this->mport * $this->txProfit
             ),
             array(
-                'operation'=> 'FiCI',
-                'acheteur'=> 'Rdm',
-                'vendeur'=> 'E1',
-                'montant'=> $this->mport * (1 - $this->txProfit)
+                'operation' => 'FiCI',
+                'acheteur' => 'Rdm',
+                'vendeur' => 'E1',
+                'montant' => $this->mport * $this->txProfit
             ),
             array(
-                'operation'=> 'Credit',
-                'acheteur'=> 'E1',
-                'vendeur'=> 'Rdm',
-                'montant'=> $this->mport * (1 - $this->txProfit)
+                'operation' => 'Credit',
+                'acheteur' => 'E1',
+                'vendeur' => 'Rdm',
+                'montant' => $this->mport * $this->txProfit
             ),
             array(
-                'operation'=> 'ConsommationIntermediaire',
-                'acheteur'=> 'Rdm',
-                'vendeur'=> 'E1',
-                'montant'=> $this->xport * (1 - $this->txProfit)
+                'operation' => 'ConsommationIntermediaire',
+                'acheteur' => 'Rdm',
+                'vendeur' => 'E1',
+                'montant' => $this->xport * $this->txProfit
             ),
             array(
-                'operation'=> 'FiCI',
-                'acheteur'=> 'E1',
-                'vendeur'=> 'Rdm',
-                'montant'=> $this->xport * (1 - $this->txProfit)
+                'operation' => 'FiCI',
+                'acheteur' => 'E1',
+                'vendeur' => 'Rdm',
+                'montant' => $this->xport * $this->txProfit
             ),
             array(
-                'operation'=> 'Credit',
-                'acheteur'=> 'Rdm',
-                'vendeur'=> 'E1',
-                'montant'=> $this->xport * (1 - $this->txProfit)
+                'operation' => 'Credit',
+                'acheteur' => 'Rdm',
+                'vendeur' => 'E1',
+                'montant' => $this->xport * $this->txProfit
             ),
 
         );
 
 
-
     }
 
-    public function getListInvest()
+    public function getListInvest(): array
     {
         return array(
             array(
@@ -447,7 +452,7 @@ class Framework
         );
     }
 
-    public function getListAmort()
+    public function getListAmort(): array
     {
         return array(
             array(
@@ -580,6 +585,32 @@ class Framework
                 'acheteur' => 'E1',
                 'vendeur' => 'E1',
                 'montant' => ($this->mtE1 - $this->mtE2 - ($this->mtE2 * $this->txProfit) * 2) * -1),
+        );
+    }
+
+    public function getSoldeNonInter(): array
+    {
+        return array(
+            array(
+                'operation' => 'AchatTitres',
+                'acheteur' => 'Rdm',
+                'vendeur' => 'E3',
+                'montant' => $this->mtSoldeExt * -1),
+            array(
+                'operation' => 'Paiement',
+                'acheteur' => 'Rdm',
+                'vendeur' => 'E3',
+                'montant' => $this->mtSoldeExt * -1),
+        );
+    }
+    public function getSoldeInter(): array
+    {
+        return array(
+            array(
+                'operation' => 'ReEscompte',
+                'acheteur' => 'E1',
+                'vendeur' => 'E1',
+                'montant' => $this->mtSoldeExt * -1),
         );
     }
 }

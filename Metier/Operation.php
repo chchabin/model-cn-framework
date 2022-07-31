@@ -1,7 +1,8 @@
 <?php
+
 namespace Metier;
 
-use Couchbase\IndexFailureException;
+use Exception;
 use Session;
 
 class Operation
@@ -11,6 +12,9 @@ class Operation
     private ComptaNat $_CN;
     public Session $Session;
 
+    /**
+     * @throws Exception
+     */
     function __construct()
     {
         $this->Session = new Session();
@@ -23,7 +27,7 @@ class Operation
 
     }
 
-    private function InitialiseAgent()
+    private function InitialiseAgent(): void
     {
         $this->_agentsList->add(new Entreprise('E1', 'E'));
         $this->_agentsList->add(new Entreprise('E2', 'E'));
@@ -34,7 +38,7 @@ class Operation
         $this->_agentsList->add(new Banque('Bdm'));
     }
 
-    private function InitialiseOperation()
+    private function InitialiseOperation(): void
     {
         $this->_operationList->add('Production');
         $this->_operationList->add('ConsommationIntermediaire');
@@ -50,41 +54,62 @@ class Operation
         $this->_operationList->add('Paiement');
         $this->_operationList->add('Credit');
         $this->_operationList->add('ReEscompte');
-       // $this->_operationList->add('EscompteInternational');
+        $this->_operationList->add('RazCN');
+        // $this->_operationList->add('EscompteInternational');
     }
 
-    public function getOperation()
+    public function getOperation(): object
     {
         return $this->_operationList;
     }
 
-    public function getAgents()
+    /**
+     * @return object
+     * @throws Exception
+     */
+    public function getAgents(): object
     {
         if ($this->Session->existeAttribut('listeAgent')) {
             $this->_agentsList->raz();
-            $list=$this->Session->getAttribut('listeAgent');
-            foreach($list as $k=>$v){
+            $list = $this->Session->getAttribut('listeAgent');
+            foreach ($list as $k => $v) {
                 $this->_agentsList->add($v);
             }
+        } else {
+            $this->Session->setAttribut('listeAgent', $this->_agentsList->all());
         }
-        else{$this->Session->setAttribut('listeAgent', $this->_agentsList->all());}
         //var_dump($this->_agentsList->all());
         return $this->_agentsList;
     }
 
-    public function getCN()
+    /**
+     * @return object
+     * @throws Exception
+     */
+    public function getCN(): object
     {
         if ($this->Session->existeAttribut('cn')) {
             $this->_CN = $this->Session->getAttribut('cn');
         }
         return $this->_CN;
     }
+
+    public function RazCN()
+    {
+        $this->_CN->setActifTeeBlank();
+        $this->_CN->setPassifTeeBlank();;
+        $this->_CN->setActifTofBlank();
+        $this->_CN->setPassifTofBlank();
+        $this->Session->setAttribut('cn', $this->_CN);
+    }
+
     /**
      * Le vendeur est M et l'acheteur E
      * @param Entreprise $ach
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function Production(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
@@ -111,6 +136,7 @@ class Operation
      * @param float $mt
      * @param float $txPrf
      * @return string
+     * @throws Exception
      */
     public function ConsommationIntermediaire(Entreprise $ach, Entreprise $vdr, float $mt, float $txPrf = 0): string
     {
@@ -126,11 +152,11 @@ class Operation
                 $this->Session->setAttribut('cn', $this->_CN);
                 $validation = true;
             }
-            if($vdr->getNom()== "Rdm"){
+            if ($vdr->getNom() == "Rdm") {
                 $this->_CN->TeeImport($mt * (1 - $txPrf));
                 $this->_CN->TeeStock($mt * (1 - $txPrf));
                 $validation = true;
-            }elseif ($ach->getNom()!="Rdm"){
+            } elseif ($ach->getNom() != "Rdm") {
                 $this->_CN->TeeCInterm($mt);
                 $this->_CN->TeeProduction($mt);
                 $validation = true;
@@ -149,6 +175,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function FiCI(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
@@ -171,13 +198,14 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function FiCredit(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
         //$validation = "les acheteurs sont les vendeurs";
         //if ($vdr->getNom() == $ach->getNom()) {
-            $ach->CIPaid($vdr, $mt);
-            $validation = true;
+        $ach->CIPaid($vdr, $mt);
+        $validation = true;
         //}
         $this->getCN();
         $this->_CN->actif_TOF($ach->getColonneTOF(), 0, 1);
@@ -186,11 +214,13 @@ class Operation
         $this->Session->setAttribut('cn', $this->_CN);
         return $validation;
     }
+
     /**
      * @param Entreprise $ach
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function RevenusSal(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
@@ -215,6 +245,7 @@ class Operation
      * @param float $mt
      * @param float $txPrf
      * @return string
+     * @throws Exception
      */
     public function Consommation(Entreprise $ach, Entreprise $vdr, float $mt, float $txPrf = 0): string
     {
@@ -238,6 +269,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function AchatTitres(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
@@ -260,6 +292,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
     public function RachatTitres(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
@@ -285,6 +318,7 @@ class Operation
      * @param float $mt
      * @param float $txPrf
      * @return bool
+     * @throws Exception
      */
     public function AchatImmob(Entreprise $ach, Entreprise $vdr, float $mt, float $txPrf = 0): bool
     {
@@ -308,6 +342,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return bool
+     * @throws Exception
      */
     public function Depreciation(Entreprise $ach, Entreprise $vdr, float $mt): bool
     {
@@ -328,6 +363,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return bool
+     * @throws Exception
      */
     public function RevenusNonSal(Entreprise $ach, Entreprise $vdr, float $mt): bool
     {
@@ -361,6 +397,7 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return bool
+     * @throws Exception
      */
     public function RemboursementBq(Entreprise $ach, Entreprise $vdr, float $mt): bool
     {
@@ -384,20 +421,21 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return bool
+     * @throws Exception
      */
     public function Paiement(Entreprise $ach, Entreprise $vdr, float $mt): bool
     {
         $bqv = $this->_agentsList->find($vdr->getBanque());
-        $bqa= $this->_agentsList->find($ach->getBanque());
+        $bqa = $this->_agentsList->find($ach->getBanque());
 
         if ($ach->getBanque() == $vdr->getBanque()) {
             $bqv->BanqueFin_Passif($vdr->getNom(), $mt);
             $bqa->BanqueFin_Passif($ach->getNom(), -1 * $mt);
-        } elseif ($vdr->getNom() == 'Rdm' || $ach->getNom()=='Rdm') {
+        } elseif ($vdr->getNom() == 'Rdm' || $ach->getNom() == 'Rdm') {
             $bqa->BanqueFin_Passif('BC', $mt);
-            if($ach->getNom()=='Rdm'){
+            if ($ach->getNom() == 'Rdm') {
                 $bqa->BanqueFin_Passif('Bfi', -1 * $mt);
-            }else {
+            } else {
                 $bqa->BanqueFin_Passif($ach->getNom(), -1 * $mt);
             }
 
@@ -421,17 +459,18 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return bool
+     * @throws Exception
      */
     public function Credit(Entreprise $ach, Entreprise $vdr, float $mt): bool
     {
         $bqv = $this->_agentsList->find($vdr->getBanque());
-        $bqa= $this->_agentsList->find($ach->getBanque());
+        $bqa = $this->_agentsList->find($ach->getBanque());
         if ($bqa == $bqv) {
             $bqa->BanqueFin_Actif($ach->getNom(), $mt);
             $bqa->BanqueFin_Passif($vdr->getNom(), $mt);
 
-            $ptof=$ach->getColonneTOF();
-            $atof=$vdr->getColonneTOF();
+            $ptof = $ach->getColonneTOF();
+            $atof = $vdr->getColonneTOF();
         } elseif ($vdr->getNom() == 'Rdm') {
 
             $bqa->BanqueFin_Passif('BC', $mt);
@@ -440,8 +479,8 @@ class Operation
             $bqv->BanqueFin_Passif('Rdm', $mt);
             $bqv->BanqueFin_Actif('BC', $mt);
 
-            $ptof=$ach->getColonneTOF();
-            $atof='BC';
+            $ptof = $ach->getColonneTOF();
+            $atof = 'BC';
         } else {
 
             $bqv->BanqueFin_Passif($vdr->getNom(), $mt);
@@ -450,8 +489,8 @@ class Operation
             $bqa->BanqueFin_Passif('BC', $mt);
             $bqa->BanqueFin_Actif('Rdm', $mt);
 
-            $ptof='BC';
-            $atof=$vdr->getColonneTOF();
+            $ptof = 'BC';
+            $atof = $vdr->getColonneTOF();
         }
 
         $this->getCN();
@@ -474,19 +513,20 @@ class Operation
      * @param Entreprise $vdr
      * @param float $mt
      * @return string
+     * @throws Exception
      */
-    public function ReEscompte(Entreprise $ach, Entreprise $vdr,float $mt): string
+    public function ReEscompte(Entreprise $ach, Entreprise $vdr, float $mt): string
     {
         $validation = "Acht = E";
 
-        $bqa= $this->_agentsList->find($ach->getBanque());
+        $bqa = $this->_agentsList->find($ach->getBanque());
         if ($ach->getColonneTOF() == 'E') {
 
-            $bqa->BanqueFin_Actif($ach->getNom(),-$mt);
-            $bqa->BanqueFin_Actif('BC',$mt);
+            $bqa->BanqueFin_Actif($ach->getNom(), -$mt);
+            $bqa->BanqueFin_Actif('BC', $mt);
 
             $this->getCN();
-            $this->_CN->passif_TOF($ach->getColonneTOF() , $mt, -1);
+            $this->_CN->passif_TOF($ach->getColonneTOF(), $mt, -1);
             $this->_CN->passif_TOF('BC', $mt, 1);
             $this->_CN->getBilan_TOF();
             $this->Session->setAttribut('cn', $this->_CN);
@@ -504,29 +544,29 @@ class Operation
      * @param float $mt
      * @return string
      */
-   /* public function EscompteInternational(Entreprise $ach, Entreprise $vdr, float $mt): string
-    {
+    /* public function EscompteInternational(Entreprise $ach, Entreprise $vdr, float $mt): string
+     {
 
-        $validation = "Acht = Bdm";
-        if ($ach->getBanque() == 'Bdm') {
-            $bqv = $this->_agentsList->find($vdr->getBanque());
-            $bqa=$this->_agentsList->find($ach->getBanque());
-            $bqv->BanqueFin_Actif($vdr->getNom(), -1*$mt);
-            $bqv->BanqueFin_Actif('BC', $mt);
+         $validation = "Acht = Bdm";
+         if ($ach->getBanque() == 'Bdm') {
+             $bqv = $this->_agentsList->find($vdr->getBanque());
+             $bqa=$this->_agentsList->find($ach->getBanque());
+             $bqv->BanqueFin_Actif($vdr->getNom(), -1*$mt);
+             $bqv->BanqueFin_Actif('BC', $mt);
 
-            $bqa->BanqueFin_Actif('BC',$mt);
-            $bqa->BanqueFin_Passif('BC', $mt);
+             $bqa->BanqueFin_Actif('BC',$mt);
+             $bqa->BanqueFin_Passif('BC', $mt);
 
-            $this->getCN();
-            $this->_CN->actif_TOF('BC', $mt, 1);
-            $this->_CN->passif_TOF($vdr->getColonneTOF(), $mt, 1);
-            $this->_CN->getBilan_TOF();
-            $this->Session->setAttribut('cn', $this->_CN);
+             $this->getCN();
+             $this->_CN->actif_TOF('BC', $mt, 1);
+             $this->_CN->passif_TOF($vdr->getColonneTOF(), $mt, 1);
+             $this->_CN->getBilan_TOF();
+             $this->Session->setAttribut('cn', $this->_CN);
 
-            $validation = true;
-        }
+             $validation = true;
+         }
 
-        return $validation;
-    }*/
+         return $validation;
+     }*/
 
 }

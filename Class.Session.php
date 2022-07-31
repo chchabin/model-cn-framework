@@ -23,7 +23,7 @@ class Session
     /**
      * Détruit la session actuelle
      */
-    public function detruire()
+    public function detruire():void
     {
         session_destroy();
     }
@@ -34,7 +34,7 @@ class Session
      * @param string $nom Nom de l'attribut
      * @param mixed $valeur Valeur de l'attribut
      */
-    public function setAttribut($nom, $valeur)
+    public function setAttribut(string $nom, mixed $valeur):void
     {
         $_SESSION[$nom] = $valeur;
     }
@@ -45,19 +45,18 @@ class Session
      * @param string $nom Nom de l'attribut
      * @return bool Vrai si l'attribut existe et sa valeur n'est pas vide 
      */
-    public function existeAttribut($nom)
+    public function existeAttribut(string $nom): bool
     {
         return (isset($_SESSION[$nom]) && $_SESSION[$nom] != "");
     }
 
     /**
      * Renvoie la valeur de l'attribut demandé
-     * 
+     *
      * @param string $nom Nom de l'attribut
-     * @return string Valeur de l'attribut
-     * @throws Exception Si l'attribut n'existe pas dans la session
+     * @return bool|string Valeur de l'attribut
      */
-    public function getAttribut($nom)
+    public function getAttribut(string $nom):mixed
     {
         if ($this->existeAttribut($nom)) {
             return $_SESSION[$nom];
@@ -67,18 +66,19 @@ class Session
             return false;
         }
     }
-    public function setFlash($message,$type = 'success'){
+    public function setFlash($message,$type = 'success'): void
+    {
         $_SESSION['flash'] = array(
             'message' => $message,
             'type'	=> $type
         );
     }
 
-    public function flash(){
+/*    public function flash(){
         if(isset($_SESSION['flash']['message'])){
             $html = '<div class="alert alert-'.$_SESSION['flash']['type'].'"><p>'.$_SESSION['flash']['message'].'</p></div>';
             $_SESSION['flash'] = array();
             return $html;
         }
-    }
+    }*/
 }

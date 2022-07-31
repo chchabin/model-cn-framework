@@ -19,9 +19,11 @@
         </tr>
         </tbody>
     </table>
-    <form action="index.php?uc=voir&action=afficherPasApas" method="post">
+    <form action="index.php?uc=voir&action=deplacerPasApas" method="post">
         <input type="hidden" name="number" value="<?= $number ?? 0 ?>">
-        <button type="submit" class="btn btn-primary">Avancer</button>
+        <input type="submit" class="btn btn-info" name="reculer" value="Reculer">
+        <input type="submit" class="btn btn-primary" name="avancer" value="Avancer">
+
     </form>
 <?php endif; ?>
 <?php foreach ($listAgents as $k => $v) : ?>
