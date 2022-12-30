@@ -38,22 +38,22 @@ class Framework
                 'acheteur' => 'E1',
                 'vendeur' => 'M',
                 'montant' => $this->mtE1),
-            array(
+          array(
                 'operation' => 'Production',
                 'acheteur' => 'E2',
                 'vendeur' => 'M',
                 'montant' => $this->mtE2),
-            array(
+             array(
                 'operation' => 'ConsommationIntermediaire',
                 'acheteur' => 'E1',
                 'vendeur' => 'E2',
                 'montant' => $this->mtE2 * $this->txProfit),
-            array(
+             array(
                 'operation' => 'FiCI',
                 'acheteur' => 'E2',
                 'vendeur' => 'E1',
                 'montant' => $this->mtE2 * $this->txProfit),
-            array(
+             array(
                 'operation' => 'Credit',
                 'acheteur' => 'E1',
                 'vendeur' => 'E2',
@@ -63,7 +63,7 @@ class Framework
                 'acheteur' => 'M',
                 'vendeur' => 'E2',
                 'montant' => $this->mtE2 * $this->txProfit),
-            array(
+             array(
                 'operation' => 'Paiement',
                 'acheteur' => 'E2',
                 'vendeur' => 'M',
@@ -88,7 +88,7 @@ class Framework
                 'acheteur' => 'E1',
                 'vendeur' => 'E1',
                 'montant' => $this->mtE1 * $this->txProfit),
-            array(
+           array(
                 'operation' => 'Credit',
                 'acheteur' => 'E1',
                 'vendeur' => 'M',
@@ -98,7 +98,7 @@ class Framework
                 'acheteur' => 'M',
                 'vendeur' => 'E1',
                 'montant' => $this->mtE1 * $this->txProfit),
-            array(
+             array(
                 'operation' => 'Paiement',
                 'acheteur' => 'M',
                 'vendeur' => 'E1',
@@ -113,63 +113,63 @@ class Framework
                 'acheteur' => 'E1',
                 'vendeur' => 'E1',
                 'montant' => $this->mtE1 * $this->txProfit * -1),
-            /****************************************/
+            //****************************************
             array(
                 'operation' => 'Production',
                 'acheteur' => 'E2',
                 'vendeur' => 'M',
                 'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E2',
-                'vendeur' => 'M',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'RevenusSal',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'RevenusSal',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtE2 * $this->txProfit),
 
-            array(
-                'operation' => 'AchatImmob',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'FiCI',
-                'acheteur' => 'E1',
-                'vendeur' => 'E2',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'Consommation',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'AchatTitres',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit),
-            array(
-                'operation' => 'RemboursementBq',
-                'acheteur' => 'E1',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'AchatImmob',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'FiCI',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'Consommation',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'AchatTitres',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit),
+             array(
+                  'operation' => 'RemboursementBq',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit),
             array(
                 'operation' => 'Credit',
                 'acheteur' => 'E1',
@@ -185,7 +185,7 @@ class Framework
                 'acheteur' => 'M',
                 'vendeur' => 'M',
                 'montant' => $this->mtE2 * $this->txProfit),
-            /*****************AMORTISSEMENT***********************/
+            //*****************AMORTISSEMENT***********************
             array(
                 'operation' => 'Production',
                 'acheteur' => 'E1',
@@ -201,178 +201,178 @@ class Framework
                 'acheteur' => 'E2',
                 'vendeur' => 'E2',
                 'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'AchatImmob',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'FiCI',
-                'acheteur' => 'E1',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'RevenusSal',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E1',
-                'vendeur' => 'M',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'AchatImmob',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtAmortit * $this->txProfit),
+              array(
+                  'operation' => 'FiCI',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * $this->txProfit),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtAmortit * $this->txProfit),
+              array(
+                  'operation' => 'RevenusSal',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
 
-            array(
-                'operation' => 'Consommation',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
-            array(
-                'operation' => 'RevenusSal',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E1',
-                'vendeur' => 'M',
-                'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
-            array(
-                'operation' => 'Consommation',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * 2),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * 2),
-            array(
-                'operation' => 'RevenusSal',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E2',
-                'vendeur' => 'M',
-                'montant' => $this->mtAmortit),
-//            Remboursement du crédit des ménages
-            array(
-                'operation' => 'FiCredit',
-                'acheteur' => 'M',
-                'vendeur' => 'M',
-                'montant' => $this->mtAmortit * -1),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'M',
-                'vendeur' => 'M',
-                'montant' => $this->mtAmortit * -1),
-            array(
-                'operation' => 'Consommation',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit - $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'M',
-                'vendeur' => 'E1',
-                'montant' => $this->mtE2 * $this->txProfit - $this->mtAmortit),
-//            Accord de crédit pour écouler la production
-            array(
-                'operation' => 'FiCredit',
-                'acheteur' => 'M',
-                'vendeur' => 'M',
-                'montant' => $this->mtAmortit),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'M',
-                'vendeur' => 'M',
-                'montant' => $this->mtAmortit),
-//            Expropriation des moyens de production par vente de titres (si oui → comptabiliser dans CN)
-            array(
-                'operation' => 'AchatTitres',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'M',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit),
-//            Pour ne pas avoir de stock (cf cn) on passe le profit dual en immobilisation
-            array(
-                'operation' => 'AchatImmob',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'FiCI',
-                'acheteur' => 'E1',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * $this->txProfit),
-            array(
-                'operation' => 'Paiement',
-                'acheteur' => 'E2',
-                'vendeur' => 'E1',
-                'montant' => $this->mtAmortit),
-            array(
-                'operation' => 'RemboursementBq',
-                'acheteur' => 'E2',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * 2),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'E2',
-                'vendeur' => 'E2',
-                'montant' => $this->mtAmortit * -1),
-            //Relations internationales
-            array(
-                'operation' => 'ConsommationIntermediaire',
-                'acheteur' => 'E1',
-                'vendeur' => 'Rdm',
-                'montant' => $this->mport * $this->txProfit
-            ),
-            array(
-                'operation' => 'FiCI',
-                'acheteur' => 'Rdm',
-                'vendeur' => 'E1',
-                'montant' => $this->mport * $this->txProfit
-            ),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'E1',
-                'vendeur' => 'Rdm',
-                'montant' => $this->mport * $this->txProfit
-            ),
-            array(
-                'operation' => 'ConsommationIntermediaire',
-                'acheteur' => 'Rdm',
-                'vendeur' => 'E1',
-                'montant' => $this->xport * $this->txProfit
-            ),
-            array(
-                'operation' => 'FiCI',
-                'acheteur' => 'E1',
-                'vendeur' => 'Rdm',
-                'montant' => $this->xport * $this->txProfit
-            ),
-            array(
-                'operation' => 'Credit',
-                'acheteur' => 'Rdm',
-                'vendeur' => 'E1',
-                'montant' => $this->xport * $this->txProfit
-            ),
+              array(
+                  'operation' => 'Consommation',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'RevenusSal',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtE2 * $this->txProfit + $this->mtAmortit),
+              array(
+                  'operation' => 'Consommation',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * 2),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * 2),
+              array(
+                  'operation' => 'RevenusSal',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtAmortit),
+  //            Remboursement du crédit des ménages
+              array(
+                  'operation' => 'FiCredit',
+                  'acheteur' => 'M',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtAmortit * -1),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'M',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtAmortit * -1),
+              array(
+                  'operation' => 'Consommation',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit - $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtE2 * $this->txProfit - $this->mtAmortit),
+  //            Accord de crédit pour écouler la production
+              array(
+                  'operation' => 'FiCredit',
+                  'acheteur' => 'M',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtAmortit),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'M',
+                  'vendeur' => 'M',
+                  'montant' => $this->mtAmortit),
+  //            Expropriation des moyens de production par vente de titres (si oui → comptabiliser dans CN)
+              array(
+                  'operation' => 'AchatTitres',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'M',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit),
+  //            Pour ne pas avoir de stock (cf. cn) on passe le profit dual en immobilisation
+              array(
+                  'operation' => 'AchatImmob',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtAmortit * $this->txProfit),
+              array(
+                  'operation' => 'FiCI',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * $this->txProfit),
+              array(
+                  'operation' => 'Paiement',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mtAmortit),
+              array(
+                  'operation' => 'RemboursementBq',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * 2),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'E2',
+                  'vendeur' => 'E2',
+                  'montant' => $this->mtAmortit * -1),
+              //Relations internationales
+              array(
+                  'operation' => 'ConsommationIntermediaire',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'Rdm',
+                  'montant' => $this->mport * $this->txProfit
+              ),
+              array(
+                  'operation' => 'FiCI',
+                  'acheteur' => 'Rdm',
+                  'vendeur' => 'E1',
+                  'montant' => $this->mport * $this->txProfit
+              ),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'Rdm',
+                  'montant' => $this->mport * $this->txProfit
+              ),
+              array(
+                  'operation' => 'ConsommationIntermediaire',
+                  'acheteur' => 'Rdm',
+                  'vendeur' => 'E1',
+                  'montant' => $this->xport * $this->txProfit
+              ),
+              array(
+                  'operation' => 'FiCI',
+                  'acheteur' => 'E1',
+                  'vendeur' => 'Rdm',
+                  'montant' => $this->xport * $this->txProfit
+              ),
+              array(
+                  'operation' => 'Credit',
+                  'acheteur' => 'Rdm',
+                  'vendeur' => 'E1',
+                  'montant' => $this->xport * $this->txProfit
+              ),
 
         );
 
